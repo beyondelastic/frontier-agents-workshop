@@ -28,7 +28,8 @@
             ]
         }
     },
-    "postCreateCommand": "pip install --user -r requirements.txt && uv tool install specify-cli --from git+https://github.com/github/spec-kit.git",
+    "postCreateCommand": "pip install --user -r requirements.txt && uv tool install specify-cli --from git+https://github.com/github/spec-kit.git && docker pull qdrant/qdrant",
+    "postStartCommand": "sudo sysctl vm.overcommit_memory=1 || true && redis-server --daemonize yes",
     "forwardPorts": [
         8000,
         8080,
@@ -37,7 +38,12 @@
         8093,
         8000,
         8001,
-        9999
+        9999,
+        6333,
+        6334
     ],
-    "remoteUser": "vscode"
+    "remoteUser": "vscode",
+    "remoteEnv": {
+        "PATH": "/home/vscode/.local/bin:/home/linuxbrew/.linuxbrew/bin:${containerEnv:PATH}"
+    }
 }
